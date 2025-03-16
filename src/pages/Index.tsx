@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { 
   Coffee, 
   Thermometer, 
-  Drop, 
+  Droplet, 
   Package, 
   Clock, 
   Shield, 
@@ -92,7 +91,7 @@ const Index = () => {
               description="Real-time digital display shows your beverage's exact temperature at a glance."
             />
             <FeatureCard 
-              icon={<Drop size={36} />}
+              icon={<Droplet size={36} />}
               title="Vacuum Insulation"
               description="Double-wall vacuum insulation keeps drinks hot or cold for up to 24 hours."
             />
