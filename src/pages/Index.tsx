@@ -26,9 +26,17 @@ const Index = () => {
 
   const colors = [
     { name: "Black", value: "#1A1F2C", image: "/lovable-uploads/626b3ba1-16b8-43ee-a17d-b22251f9f3a2.png" },
-    { name: "Purple", value: "#D3C5F0", image: "/lovable-uploads/cf312bf0-6f44-45d5-9707-e77fafe0a782.png" },
+    { name: "Red", value: "#FF3B30", image: "/lovable-uploads/73f0360a-8b6b-4cbf-80c2-def31eaea282.png" },
+    { name: "Golden", value: "#D4AF37", image: "/lovable-uploads/4c263923-2e03-4134-ac18-7c2213f23e65.png" },
+    { name: "Blue", value: "#3478F6", image: "/lovable-uploads/966a9311-1cdd-44a4-9afb-307655918534.png" },
+    { name: "White", value: "#FFFFFF", image: "/lovable-uploads/8ae69f4a-86e5-4f3f-9911-814b6751feef.png" },
     { name: "Pink", value: "#FFC0CB", image: "/lovable-uploads/f72ec7bb-eb88-4ad1-abc2-1f1ea39ffec6.png" }
   ];
+
+  const getCurrentColorImage = () => {
+    const color = colors.find(c => c.name.toLowerCase() === selectedColor);
+    return color ? color.image : colors[0].image;
+  };
 
   return (
     <div className="min-h-screen">
@@ -58,7 +66,7 @@ const Index = () => {
             </div>
             <div className="md:w-1/2 relative flex justify-center">
               <img 
-                src="/lovable-uploads/626b3ba1-16b8-43ee-a17d-b22251f9f3a2.png" 
+                src={getCurrentColorImage()}
                 alt="GolMee Temperature Trekker Thermos" 
                 className="max-h-[500px] object-contain z-10"
               />
@@ -223,12 +231,12 @@ const Index = () => {
               Choose Your Style
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              The GolMee Temperature Trekker comes in three elegant colors to match your personal style.
+              The GolMee Temperature Trekker comes in six elegant colors to match your personal style, all at the same price.
             </p>
           </div>
           
           <div className="flex flex-col items-center">
-            <div className="flex justify-center space-x-8 mb-12">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6 mb-12">
               {colors.map((color) => (
                 <ColorOption 
                   key={color.name}
@@ -243,13 +251,21 @@ const Index = () => {
             
             <div className="relative w-full max-w-md">
               <img 
-                src={colors.find(c => c.name.toLowerCase() === selectedColor)?.image || colors[0].image}
+                src={getCurrentColorImage()}
                 alt={`GolMee Thermos in ${selectedColor}`}
                 className="w-full max-h-[500px] object-contain"
               />
               <div className="absolute bottom-16 right-16">
                 <TemperatureDisplay initialTemp={25.5} size="md" />
               </div>
+            </div>
+            
+            <div className="mt-8 text-center">
+              <h3 className="text-xl font-semibold mb-2">All Colors - Same Flat Price</h3>
+              <p className="text-gray-600 mb-6">Every color option includes the same premium features and quality</p>
+              <Button className="bg-golmee-blue hover:bg-blue-600 text-white">
+                Select This Color
+              </Button>
             </div>
           </div>
         </div>
@@ -320,8 +336,8 @@ const Index = () => {
               </div>
               <div className="md:w-1/2 flex justify-center">
                 <img 
-                  src="/lovable-uploads/626b3ba1-16b8-43ee-a17d-b22251f9f3a2.png"
-                  alt="GolMee Thermos Gift" 
+                  src="/lovable-uploads/ceeb10c4-e008-4064-89e2-0546c9ae37bb.png"
+                  alt="GolMee Thermos Gift Collection" 
                   className="max-h-[300px] object-contain"
                 />
               </div>

@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 type ColorOptionProps = {
@@ -27,11 +26,15 @@ const ColorOption = ({
     >
       <div
         className={cn(
-          "w-16 h-16 rounded-full border-2 flex items-center justify-center",
+          "w-16 h-16 rounded-full border-2 flex items-center justify-center overflow-hidden",
           isActive ? "border-golmee-blue" : "border-transparent"
         )}
-        style={{ backgroundColor: color }}
-      ></div>
+      >
+        <div
+          className="w-full h-full"
+          style={{ backgroundColor: color }}
+        ></div>
+      </div>
       <span
         className={cn(
           "text-sm font-medium",
