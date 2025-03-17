@@ -22,7 +22,7 @@ const VideoSection = () => {
           </p>
         </div>
         
-        <div className="max-w-2xl mx-auto relative rounded-xl overflow-hidden shadow-2xl">
+        <div className="max-w-lg mx-auto relative rounded-xl overflow-hidden shadow-2xl">
           {!playing ? (
             <div className="relative">
               <img 
