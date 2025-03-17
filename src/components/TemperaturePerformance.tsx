@@ -71,11 +71,12 @@ const TemperaturePerformance = () => {
           </p>
         </div>
         
-        <div className="max-w-4xl mx-auto mb-16">
+        <div className="max-w-5xl mx-auto mb-16">
           <img 
             src="/lovable-uploads/4762a9f1-8505-4b8c-9eac-8dd8cd903a6d.png" 
             alt="Temperature Performance Chart" 
-            className="w-full rounded-lg shadow-lg"
+            className="w-full rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+            onClick={() => window.open("/lovable-uploads/4762a9f1-8505-4b8c-9eac-8dd8cd903a6d.png", "_blank")}
           />
         </div>
 
