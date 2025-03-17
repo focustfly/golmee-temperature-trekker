@@ -39,7 +39,7 @@ const HeroSection = ({ currentColorImage }: HeroSectionProps) => {
           </div>
           <div className="md:w-1/2 relative flex justify-center">
             <img 
-              src={currentColorImage}
+              src="/lovable-uploads/b3f5830c-0a5d-4919-80ce-11a49f7ed34c.png"
               alt="GolMee Temperature Trekker Thermos" 
               className="max-h-[500px] object-contain z-10"
             />
