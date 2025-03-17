@@ -1,0 +1,31 @@
+
+// List of countries for the dropdown
+export const COUNTRIES = [
+  "United States",
+  "Canada",
+  "United Kingdom",
+  "Australia",
+  "Germany",
+  "France",
+  "Japan",
+  "China",
+  "India",
+  "Brazil",
+  "Mexico",
+  "Nigeria",
+  "Spain",
+  "Italy",
+  "Netherlands",
+  "Sweden",
+  "Norway",
+  "Denmark",
+  "Finland",
+  "South Korea",
+  "Singapore",
+  "New Zealand",
+  "Ireland",
+  "Switzerland",
+  "Belgium",
+  "Austria",
+  // Add more countries as needed
+];
