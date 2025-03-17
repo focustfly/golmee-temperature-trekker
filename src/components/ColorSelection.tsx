@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ColorOption from "@/components/ColorOption";
@@ -28,11 +27,11 @@ const ColorSelection = ({
 
   // Updated colors array with new image paths
   const updatedColors: ColorOption[] = [
-    { name: "Black", value: "#1A1F2C", image: "/lovable-uploads/dd1cdc9a-0a4f-4dcb-8253-2ae677de40bd.png" },
-    { name: "Red", value: "#FF3B30", image: "/lovable-uploads/dc55dc2a-f417-4bbb-8837-015bed6880d9.png" },
-    { name: "Golden", value: "#D4AF37", image: "/lovable-uploads/d2e8322b-e6c9-41c7-b7be-8a19ef044750.png" },
-    { name: "Blue", value: "#3478F6", image: "/lovable-uploads/feddc02d-5366-4877-ab16-ab3f3d1320cb.png" },
-    { name: "Pink", value: "#FFC0CB", image: "/lovable-uploads/8a40a1ac-f0f3-4615-9382-ee0b4e9cb33b.png" }
+    { name: "Black", value: "#1A1F2C", image: "/lovable-uploads/69c29ead-9d29-4d2d-b60f-2f65c17c9927.png" },
+    { name: "Red", value: "#FF3B30", image: "/lovable-uploads/c4d5385e-c0f6-449e-b294-c0331c8a0bfb.png" },
+    { name: "Golden", value: "#D4AF37", image: "/lovable-uploads/ad93af90-e3e9-461c-a427-02724497f4dc.png" },
+    { name: "Blue", value: "#3478F6", image: "/lovable-uploads/ec39d1bb-d67b-4a78-9196-611cb706bea4.png" },
+    { name: "Pink", value: "#FFC0CB", image: "/lovable-uploads/450caec4-30db-4392-adcb-6a7274c244f4.png" }
   ];
 
   // Get current image from our updated colors
