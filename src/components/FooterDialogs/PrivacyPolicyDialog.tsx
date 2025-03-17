@@ -73,7 +73,7 @@ const PrivacyPolicyDialog = () => {
             
             <div className="pt-4">
               <p className="text-sm text-muted-foreground italic">
-                Last updated: June 1, 2023
+                Last updated: March 17, 2025
               </p>
             </div>
           </div>
