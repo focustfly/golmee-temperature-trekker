@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { 
   Carousel, 
@@ -37,6 +38,11 @@ const TemperaturePerformance = () => {
       src: "/lovable-uploads/dc55dc2a-f417-4bbb-8837-015bed6880d9.png",
       alt: "Red Thermos with temperature display",
       color: "red"
+    },
+    {
+      src: "/lovable-uploads/55bbb2b2-cefe-420a-9c9a-fd79a7a0c998.png",
+      alt: "Thermos with temperature base display",
+      color: "black"
     }
   ];
 
