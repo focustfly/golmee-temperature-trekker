@@ -63,13 +63,6 @@ const FAQDialog = () => {
                 Yes, GolMee cups feature a secure leak-proof seal. The lid is designed with a locking mechanism that prevents spills even when the cup is turned upside down.
               </p>
             </div>
-            
-            <div>
-              <h3 className="font-medium text-base mb-2">Does the app work with both iOS and Android?</h3>
-              <p className="text-sm text-muted-foreground">
-                Yes, the GolMee companion app is available for both iOS and Android devices. You can download it from the App Store or Google Play Store.
-              </p>
-            </div>
           </div>
         </div>
       </DialogContent>
