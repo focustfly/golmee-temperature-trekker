@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import TemperatureDisplay from "@/components/TemperatureDisplay";
+import BlogDialog from "@/components/FooterDialogs/BlogDialog";
 
 type HeroSectionProps = {
   currentColorImage: string;
@@ -24,9 +25,16 @@ const HeroSection = ({ currentColorImage }: HeroSectionProps) => {
               <Button className="bg-golmee-blue hover:bg-blue-600 text-white px-8 py-6 text-lg">
                 Buy Now
               </Button>
-              <Button variant="outline" className="border-golmee-blue text-golmee-blue hover:bg-golmee-blue/10 px-8 py-6 text-lg">
-                Learn More
-              </Button>
+              <BlogDialog 
+                trigger={
+                  <Button 
+                    variant="outline" 
+                    className="border-golmee-blue text-golmee-blue hover:bg-golmee-blue/10 px-8 py-6 text-lg"
+                  >
+                    Learn More
+                  </Button>
+                }
+              />
             </div>
           </div>
           <div className="md:w-1/2 relative flex justify-center">
