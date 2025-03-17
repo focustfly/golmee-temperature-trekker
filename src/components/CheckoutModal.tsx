@@ -22,6 +22,7 @@ export type ColorOption = {
 const checkoutFormSchema = z.object({
   fullName: z.string().min(2, { message: "Full name is required" }),
   email: z.string().email({ message: "Valid email is required" }),
+  phoneNumber: z.string().min(10, { message: "Valid phone number is required" }),
   address: z.string().min(5, { message: "Address is required" }),
   city: z.string().min(2, { message: "City is required" }),
   postalCode: z.string().min(3, { message: "Postal code is required" }),
@@ -56,6 +57,7 @@ const CheckoutModal = ({
     defaultValues: {
       fullName: "",
       email: "",
+      phoneNumber: "",
       address: "",
       city: "",
       postalCode: "",
@@ -170,6 +172,19 @@ const CheckoutModal = ({
                 </div>
                 
                 <div className="col-span-2">
+                  <Label htmlFor="phoneNumber">Phone Number</Label>
+                  <Input 
+                    id="phoneNumber" 
+                    type="tel" 
+                    {...form.register("phoneNumber")} 
+                    placeholder="Enter your phone number"
+                  />
+                  {form.formState.errors.phoneNumber && (
+                    <p className="text-sm text-red-500">{form.formState.errors.phoneNumber.message}</p>
+                  )}
+                </div>
+                
+                <div className="col-span-2">
                   <Label htmlFor="address">Address</Label>
                   <Textarea 
                     id="address" 
@@ -232,6 +247,7 @@ const CheckoutModal = ({
                       if (
                         form.getValues("fullName") &&
                         form.getValues("email") &&
+                        form.getValues("phoneNumber") &&
                         form.getValues("address") &&
                         form.getValues("city") &&
                         form.getValues("postalCode") &&
@@ -239,7 +255,7 @@ const CheckoutModal = ({
                       ) {
                         setStep("payment");
                       } else {
-                        form.trigger(["fullName", "email", "address", "city", "postalCode", "country"]);
+                        form.trigger(["fullName", "email", "phoneNumber", "address", "city", "postalCode", "country"]);
                       }
                     }}
                   >
