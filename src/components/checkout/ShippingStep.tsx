@@ -27,6 +27,7 @@ const COUNTRIES = [
   "India",
   "Brazil",
   "Mexico",
+  "Nigeria",
   "Spain",
   "Italy",
   "Netherlands",
