@@ -52,7 +52,7 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-gray-800 mt-8 pt-8 flex justify-center">
           <p className="text-gray-400 text-sm">
             &copy; {new Date().getFullYear()} GolMee. All rights reserved.
           </p>
