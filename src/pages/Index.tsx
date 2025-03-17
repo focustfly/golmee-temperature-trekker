@@ -8,7 +8,6 @@ import ProductSpecifications from "@/components/ProductSpecifications";
 import TemperaturePerformance from "@/components/TemperaturePerformance";
 import ColorSelection from "@/components/ColorSelection";
 import UsageScenariosSection from "@/components/UsageScenariosSection";
-import GiftSection from "@/components/GiftSection";
 import CtaSection from "@/components/CtaSection";
 import { ColorOption } from "@/components/ColorSelection";
 
@@ -43,7 +42,6 @@ const Index = () => {
         currentColorImage={getCurrentColorImage()}
       />
       <UsageScenariosSection />
-      <GiftSection />
       <CtaSection />
       <Footer />
     </div>
