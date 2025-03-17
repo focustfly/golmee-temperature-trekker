@@ -1,5 +1,8 @@
 
 import { Heart } from "lucide-react";
+import FAQDialog from "./FooterDialogs/FAQDialog";
+import ContactDialog from "./FooterDialogs/ContactDialog";
+import WarrantyDialog from "./FooterDialogs/WarrantyDialog";
 
 const Footer = () => {
   return (
@@ -28,9 +31,9 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Support</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Warranty</a></li>
+              <li><FAQDialog /></li>
+              <li><ContactDialog /></li>
+              <li><WarrantyDialog /></li>
             </ul>
           </div>
           
