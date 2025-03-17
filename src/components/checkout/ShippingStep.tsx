@@ -6,6 +6,43 @@ import { Textarea } from "@/components/ui/textarea";
 import { UseFormReturn } from "react-hook-form";
 import { CheckoutFormValues } from "@/components/checkout/types";
 import { Form } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+// List of countries for the dropdown
+const COUNTRIES = [
+  "United States",
+  "Canada",
+  "United Kingdom",
+  "Australia",
+  "Germany",
+  "France",
+  "Japan",
+  "China",
+  "India",
+  "Brazil",
+  "Mexico",
+  "Spain",
+  "Italy",
+  "Netherlands",
+  "Sweden",
+  "Norway",
+  "Denmark",
+  "Finland",
+  "South Korea",
+  "Singapore",
+  "New Zealand",
+  "Ireland",
+  "Switzerland",
+  "Belgium",
+  "Austria",
+  // Add more countries as needed
+];
 
 interface ShippingStepProps {
   form: UseFormReturn<CheckoutFormValues>;
@@ -36,6 +73,10 @@ const ShippingStep = ({ form, onBack, onContinue }: ShippingStepProps) => {
         "country",
       ]);
     }
+  };
+
+  const handleCountryChange = (value: string) => {
+    form.setValue("country", value, { shouldValidate: true });
   };
 
   return (
@@ -130,11 +171,21 @@ const ShippingStep = ({ form, onBack, onContinue }: ShippingStepProps) => {
 
           <div className="col-span-2">
             <Label htmlFor="country">Country</Label>
-            <Input
-              id="country"
-              {...form.register("country")}
-              placeholder="Enter your country"
-            />
+            <Select 
+              onValueChange={handleCountryChange}
+              defaultValue={form.getValues("country") || ""}
+            >
+              <SelectTrigger id="country" className="w-full">
+                <SelectValue placeholder="Select your country" />
+              </SelectTrigger>
+              <SelectContent>
+                {COUNTRIES.map((country) => (
+                  <SelectItem key={country} value={country}>
+                    {country}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             {form.formState.errors.country && (
               <p className="text-sm text-red-500">
                 {form.formState.errors.country.message}
