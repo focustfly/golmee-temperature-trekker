@@ -80,36 +80,34 @@ const TemperaturePerformance = () => {
           />
         </div>
 
-        <div className="mt-16">
-          <h3 className="text-2xl font-semibold text-center mb-8">Available in 5 Elegant Colors</h3>
-          <div className="relative max-w-2xl mx-auto px-12">
-            <Carousel
-              opts={{
-                align: "center",
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent>
-                {thermosImages.map((image, index) => (
-                  <CarouselItem key={index} className="flex items-center justify-center">
-                    <div 
-                      className="bg-white p-6 rounded-lg shadow-md overflow-hidden w-full max-w-xs mx-auto cursor-pointer transition-transform hover:scale-105"
-                      onClick={() => handleImageClick(image.color)}
-                    >
-                      <img 
-                        src={image.src} 
-                        alt={image.alt}
-                        className="w-full h-auto object-contain transition-all duration-300 max-h-[350px]"
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="absolute -left-2" />
-              <CarouselNext className="absolute -right-2" />
-            </Carousel>
-          </div>
+        <h3 className="text-2xl font-semibold text-center mb-8">Available in 5 Elegant Colors</h3>
+        <div className="relative max-w-2xl mx-auto px-12">
+          <Carousel
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {thermosImages.map((image, index) => (
+                <CarouselItem key={index} className="flex items-center justify-center">
+                  <div 
+                    className="bg-white p-6 rounded-lg shadow-md overflow-hidden w-full max-w-xs mx-auto cursor-pointer transition-transform hover:scale-105"
+                    onClick={() => handleImageClick(image.color)}
+                  >
+                    <img 
+                      src={image.src} 
+                      alt={image.alt}
+                      className="w-full h-auto object-contain transition-all duration-300 max-h-[350px]"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="absolute -left-2" />
+            <CarouselNext className="absolute -right-2" />
+          </Carousel>
         </div>
       </div>
 
