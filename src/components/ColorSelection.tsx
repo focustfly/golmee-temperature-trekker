@@ -26,6 +26,21 @@ const ColorSelection = ({
 }: ColorSelectionProps) => {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
 
+  // Updated colors array with new image paths
+  const updatedColors: ColorOption[] = [
+    { name: "Black", value: "#1A1F2C", image: "/lovable-uploads/dd1cdc9a-0a4f-4dcb-8253-2ae677de40bd.png" },
+    { name: "Red", value: "#FF3B30", image: "/lovable-uploads/dc55dc2a-f417-4bbb-8837-015bed6880d9.png" },
+    { name: "Golden", value: "#D4AF37", image: "/lovable-uploads/d2e8322b-e6c9-41c7-b7be-8a19ef044750.png" },
+    { name: "Blue", value: "#3478F6", image: "/lovable-uploads/feddc02d-5366-4877-ab16-ab3f3d1320cb.png" },
+    { name: "Pink", value: "#FFC0CB", image: "/lovable-uploads/8a40a1ac-f0f3-4615-9382-ee0b4e9cb33b.png" }
+  ];
+
+  // Get current image from our updated colors
+  const getCurrentImage = () => {
+    const color = updatedColors.find(c => c.name.toLowerCase() === selectedColor);
+    return color ? color.image : updatedColors[0].image;
+  };
+
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
@@ -34,13 +49,13 @@ const ColorSelection = ({
             Choose Your Style
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            The GolMee Temperature Trekker comes in six elegant colors to match your personal style, all at the same price.
+            The GolMee Temperature Trekker comes in five elegant colors to match your personal style, all at the same price.
           </p>
         </div>
         
         <div className="flex flex-col items-center">
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6 mb-12">
-            {colors.map((color) => (
+          <div className="grid grid-cols-3 md:grid-cols-5 gap-4 md:gap-6 mb-12">
+            {updatedColors.map((color) => (
               <ColorOption 
                 key={color.name}
                 color={color.value}
@@ -54,7 +69,7 @@ const ColorSelection = ({
           
           <div className="relative w-full max-w-md">
             <img 
-              src={currentColorImage}
+              src={getCurrentImage()}
               alt={`GolMee Thermos in ${selectedColor}`}
               className="w-full max-h-[500px] object-contain"
             />
@@ -80,7 +95,7 @@ const ColorSelection = ({
       <CheckoutModal
         open={checkoutOpen}
         onOpenChange={setCheckoutOpen}
-        colors={colors}
+        colors={updatedColors}
         selectedColor={selectedColor}
         onColorSelect={onColorSelect}
       />
