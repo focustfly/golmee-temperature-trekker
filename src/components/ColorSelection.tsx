@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import ColorOption from "@/components/ColorOption";
 import TemperatureDisplay from "@/components/TemperatureDisplay";
+import CheckoutModal from "@/components/CheckoutModal";
 
 export type ColorOption = {
   name: string;
@@ -23,6 +24,8 @@ const ColorSelection = ({
   onColorSelect,
   currentColorImage,
 }: ColorSelectionProps) => {
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
@@ -63,12 +66,24 @@ const ColorSelection = ({
           <div className="mt-8 text-center">
             <h3 className="text-xl font-semibold mb-2">All Colors - Same Flat Price</h3>
             <p className="text-gray-600 mb-6">Every color option includes the same premium features and quality</p>
-            <Button className="bg-golmee-blue hover:bg-blue-600 text-white">
+            <Button 
+              className="bg-golmee-blue hover:bg-blue-600 text-white"
+              onClick={() => setCheckoutOpen(true)}
+            >
               Select This Color
             </Button>
           </div>
         </div>
       </div>
+
+      {/* Checkout Modal */}
+      <CheckoutModal
+        open={checkoutOpen}
+        onOpenChange={setCheckoutOpen}
+        colors={colors}
+        selectedColor={selectedColor}
+        onColorSelect={onColorSelect}
+      />
     </section>
   );
 };
