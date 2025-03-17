@@ -22,13 +22,14 @@ const VideoSection = () => {
           </p>
         </div>
         
-        <div className="max-w-lg mx-auto relative rounded-xl overflow-hidden shadow-2xl">
+        <div className="max-w-lg mx-auto relative rounded-xl overflow-hidden shadow-2xl" style={{ maxHeight: "300px" }}>
           {!playing ? (
             <div className="relative">
               <img 
                 src="/lovable-uploads/b3f5830c-0a5d-4919-80ce-11a49f7ed34c.png"
                 alt="GolMee Thermos Video Thumbnail" 
-                className="w-full h-auto"
+                className="w-full h-auto object-cover"
+                style={{ maxHeight: "300px" }}
               />
               <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                 <Button 
@@ -42,10 +43,10 @@ const VideoSection = () => {
           ) : (
             <video
               width="100%"
-              height="auto"
+              height="300"
               controls
               autoPlay
-              className="w-full h-auto"
+              className="w-full h-auto max-h-[300px] object-contain"
             >
               <source 
                 src="https://caiyuanbao.alicdn.com/2da476065ce29979/be78084b6acff8a9/20220902_27893c4e52ce03bd_375643574520_mp4_264_hd_taobao.mp4?auth_key=1742196438-0-0-462ab940c31bdb3bda366b0a9f6ff28c&biz=community-569f3a8d2f649236&t=213e02cd17421937386713312e18bc&t=213e02cd17421937386713312e18bc&b=community&p=cloudvideo_http_cbu_jihuohui" 
