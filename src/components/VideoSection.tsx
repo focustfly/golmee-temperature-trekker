@@ -40,15 +40,19 @@ const VideoSection = () => {
               </div>
             </div>
           ) : (
-            <iframe
+            <video
               width="100%"
-              height="500"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-              title="GolMee Temperature Trekker Video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+              height="auto"
+              controls
+              autoPlay
+              className="w-full h-auto"
+            >
+              <source 
+                src="https://caiyuanbao.alicdn.com/2da476065ce29979/be78084b6acff8a9/20220902_27893c4e52ce03bd_375643574520_mp4_264_hd_taobao.mp4?auth_key=1742196438-0-0-462ab940c31bdb3bda366b0a9f6ff28c&biz=community-569f3a8d2f649236&t=213e02cd17421937386713312e18bc&t=213e02cd17421937386713312e18bc&b=community&p=cloudvideo_http_cbu_jihuohui" 
+                type="video/mp4" 
+              />
+              Your browser does not support the video tag.
+            </video>
           )}
         </div>
       </div>
