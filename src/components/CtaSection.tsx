@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import CheckoutModal from "@/components/CheckoutModal";
-import { ColorOption } from "@/components/CheckoutModal";
+import { ColorOption } from "@/components/checkout/types";
 
 const CtaSection = () => {
   const [checkoutOpen, setCheckoutOpen] = useState(false);

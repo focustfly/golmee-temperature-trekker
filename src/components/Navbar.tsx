@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import CheckoutModal from "@/components/CheckoutModal";
-import { ColorOption } from "@/components/CheckoutModal";
+import { ColorOption } from "@/components/checkout/types";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
