@@ -1,3 +1,4 @@
+
 import { Heart } from "lucide-react";
 import FAQDialog from "./FooterDialogs/FAQDialog";
 import ContactDialog from "./FooterDialogs/ContactDialog";
@@ -5,6 +6,7 @@ import WarrantyDialog from "./FooterDialogs/WarrantyDialog";
 import PrivacyPolicyDialog from "./FooterDialogs/PrivacyPolicyDialog";
 import TermsOfServiceDialog from "./FooterDialogs/TermsOfServiceDialog";
 import ShippingPolicyDialog from "./FooterDialogs/ShippingPolicyDialog";
+import TrackOrderDialog from "./FooterDialogs/TrackOrderDialog";
 
 const Footer = () => {
   return (
@@ -36,6 +38,7 @@ const Footer = () => {
               <li><FAQDialog /></li>
               <li><ContactDialog /></li>
               <li><WarrantyDialog /></li>
+              <li><TrackOrderDialog /></li>
             </ul>
           </div>
           
