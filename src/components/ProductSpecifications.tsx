@@ -10,7 +10,7 @@ const ProductSpecifications = () => {
             <img 
               src="/lovable-uploads/b1db625e-052d-4e0b-900a-b4ea05dc69c9.png" 
               alt="GolMee Temperature Trekker Inside View" 
-              className="max-w-full mx-auto"
+              className="max-w-full mx-auto rounded-2xl"
             />
           </div>
           <div className="md:w-1/2 md:pl-12">
