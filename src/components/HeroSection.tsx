@@ -58,7 +58,7 @@ const HeroSection = ({ currentColorImage }: HeroSectionProps) => {
             <img 
               src="/lovable-uploads/b3f5830c-0a5d-4919-80ce-11a49f7ed34c.png"
               alt="GolMee Temperature Trekker Thermos" 
-              className="max-h-[500px] object-contain z-10"
+              className="max-h-[500px] object-contain z-10 rounded-xl shadow-md"
             />
             <div className="absolute top-1/2 right-1/3 transform -translate-y-1/2">
               <TemperatureDisplay initialTemp={25.5} size="lg" />
