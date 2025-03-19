@@ -1,13 +1,27 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import TemperatureDisplay from "@/components/TemperatureDisplay";
 import BlogDialog from "@/components/FooterDialogs/BlogDialog";
+import CheckoutModal from "@/components/CheckoutModal";
+import { ColorOption } from "@/components/checkout/types";
 
 type HeroSectionProps = {
   currentColorImage: string;
 };
 
 const HeroSection = ({ currentColorImage }: HeroSectionProps) => {
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [selectedColor, setSelectedColor] = useState("black");
+
+  const colors: ColorOption[] = [
+    { name: "Black", value: "#1A1F2C", image: "/lovable-uploads/69c29ead-9d29-4d2d-b60f-2f65c17c9927.png" },
+    { name: "Red", value: "#FF3B30", image: "/lovable-uploads/c4d5385e-c0f6-449e-b294-c0331c8a0bfb.png" },
+    { name: "Golden", value: "#D4AF37", image: "/lovable-uploads/ad93af90-e3e9-461c-a427-02724497f4dc.png" },
+    { name: "Blue", value: "#3478F6", image: "/lovable-uploads/ec39d1bb-d67b-4a78-9196-611cb706bea4.png" },
+    { name: "Pink", value: "#FFC0CB", image: "/lovable-uploads/450caec4-30db-4392-adcb-6a7274c244f4.png" }
+  ];
+
   return (
     <section className="hero-gradient pt-28 pb-20 md:pt-40 md:pb-32">
       <div className="container mx-auto px-4">
@@ -22,7 +36,10 @@ const HeroSection = ({ currentColorImage }: HeroSectionProps) => {
               304 Stainless Steel Vacuum Insulated for 12-24 hour temperature control.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-golmee-blue hover:bg-blue-600 text-white px-8 py-6 text-lg">
+              <Button 
+                className="bg-golmee-blue hover:bg-blue-600 text-white px-8 py-6 text-lg"
+                onClick={() => setCheckoutOpen(true)}
+              >
                 Buy Now
               </Button>
               <BlogDialog 
@@ -50,6 +67,15 @@ const HeroSection = ({ currentColorImage }: HeroSectionProps) => {
           </div>
         </div>
       </div>
+
+      {/* Checkout Modal */}
+      <CheckoutModal
+        open={checkoutOpen}
+        onOpenChange={setCheckoutOpen}
+        colors={colors}
+        selectedColor={selectedColor}
+        onColorSelect={setSelectedColor}
+      />
     </section>
   );
 };
