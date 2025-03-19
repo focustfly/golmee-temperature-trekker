@@ -21,6 +21,13 @@ const Footer = () => {
             <div className="flex items-center">
               <span className="text-xs bg-white/20 px-2 py-1 rounded">CE / EU Certified</span>
             </div>
+            <div className="mt-6">
+              <img 
+                src="/lovable-uploads/098bd6e3-b4e2-49dc-841e-bf9a20cb7f01.png" 
+                alt="Secured Payment - Powered by Stripe" 
+                className="max-w-[200px] h-auto"
+              />
+            </div>
           </div>
           
           <div>
