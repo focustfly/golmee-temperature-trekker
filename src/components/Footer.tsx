@@ -52,10 +52,15 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-gray-800 mt-8 pt-8 flex justify-center">
+        <div className="border-t border-gray-800 mt-8 pt-8 flex justify-between items-center">
           <p className="text-gray-400 text-sm">
             &copy; {new Date().getFullYear()} GolMee. All rights reserved.
           </p>
+          <img 
+            src="/lovable-uploads/8bfdea4c-0b3a-461b-b93e-43acc41f49bc.png" 
+            alt="Powered by Stripe" 
+            className="h-10 object-contain"
+          />
         </div>
       </div>
     </footer>
@@ -63,3 +68,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
