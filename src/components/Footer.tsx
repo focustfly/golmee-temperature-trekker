@@ -52,9 +52,12 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-gray-800 mt-8 pt-8 flex justify-between items-center">
+        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-400 text-sm">
             &copy; {new Date().getFullYear()} GolMee. All rights reserved.
+          </p>
+          <p className="text-gray-400 text-sm text-center">
+            BN: 732758420 and GST/HST: 732758420RT0001
           </p>
           <img 
             src="/lovable-uploads/8bfdea4c-0b3a-461b-b93e-43acc41f49bc.png" 
@@ -68,4 +71,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
