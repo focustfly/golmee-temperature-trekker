@@ -49,9 +49,7 @@ const CheckoutModal = ({
       city: "",
       postalCode: "",
       country: "",
-      cardNumber: "",
-      expiryDate: "",
-      cvv: "",
+      // Card fields removed since we're using Stripe checkout
     },
   });
 
@@ -59,48 +57,31 @@ const CheckoutModal = ({
     setIsSubmitting(true);
     
     try {
-      // Create order object with shipping and product info
-      const orderData = {
-        customer: {
-          fullName: data.fullName,
-          email: data.email,
-          phoneNumber: data.phoneNumber,
-          shippingAddress: {
-            address: data.address,
-            city: data.city,
-            postalCode: data.postalCode,
-            country: data.country,
-          }
-        },
-        product: {
-          name: "Temperature Trekker",
-          color: selectedColor,
-          price: 49.99,
-          currency: "USD"
-        },
-        orderDate: new Date().toISOString(),
-        paymentMethod: "Credit Card", // In a real app, you'd use a payment processor
-        // Note: We're not sending the actual card details for security reasons
-      };
-
-      // Generate a unique order reference
-      const generatedOrderReference = 'ORD-' + Math.random().toString(36).substr(2, 9);
+      // This will only be called for confirmation from Stripe success return
+      // Most of the payment logic is now in the PaymentStep component
       
-      // Save order to local storage
-      saveOrder(generatedOrderReference, orderData);
+      // Check if we have a pending order reference
+      const pendingOrderRef = localStorage.getItem('pendingOrderReference');
       
-      setOrderReference(generatedOrderReference);
-      
-      toast({
-        title: "Order Placed Successfully!",
-        description: "Thank you for your purchase. You will receive a confirmation email shortly.",
-      });
-      
-      setStep("confirmation");
+      if (pendingOrderRef) {
+        setOrderReference(pendingOrderRef);
+        localStorage.removeItem('pendingOrderReference');
+        
+        // Update order status to completed
+        // This would typically be done by a webhook in a real app
+        // For this demo, we're simulating the completed payment
+        
+        toast({
+          title: "Payment Successful!",
+          description: "Thank you for your purchase. You will receive a confirmation email shortly.",
+        });
+        
+        setStep("confirmation");
+      }
     } catch (error) {
       console.error("Order submission error:", error);
       toast({
-        title: "Order Submission Failed",
+        title: "Order Processing Failed",
         description: "There was a problem processing your order. Please try again.",
         variant: "destructive",
       });
@@ -165,6 +146,7 @@ const CheckoutModal = ({
             onBack={() => setStep("shipping")}
             onSubmit={onSubmit}
             isSubmitting={isSubmitting}
+            selectedColor={selectedColor}
           />
         )}
 
