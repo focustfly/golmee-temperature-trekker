@@ -17,6 +17,7 @@ import {
   checkoutFormSchema, 
   CheckoutStep 
 } from "@/components/checkout/types";
+import { saveOrder } from "@/utils/orderStorage";
 
 interface CheckoutModalProps {
   open: boolean;
@@ -82,21 +83,13 @@ const CheckoutModal = ({
         // Note: We're not sending the actual card details for security reasons
       };
 
-      // Send order data to backend
-      const response = await fetch('https://your-wordpress-site.com/wp-json/custom/v1/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create order');
-      }
-
-      const result = await response.json();
-      setOrderReference(result.orderReference || 'ORD-' + Math.random().toString(36).substr(2, 9));
+      // Generate a unique order reference
+      const generatedOrderReference = 'ORD-' + Math.random().toString(36).substr(2, 9);
+      
+      // Save order to local storage
+      saveOrder(generatedOrderReference, orderData);
+      
+      setOrderReference(generatedOrderReference);
       
       toast({
         title: "Order Placed Successfully!",
