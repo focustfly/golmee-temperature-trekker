@@ -1,3 +1,4 @@
+
 import { loadStripe } from '@stripe/stripe-js';
 
 // This is a publishable key, so it's safe to include in client-side code
@@ -41,7 +42,8 @@ export const redirectToStripePayment = async (options: StripePaymentOptions) => 
         color: options.color,
         customerEmail: options.customerEmail,
         customerName: options.customerName,
-        shippingAddress: options.shippingAddress
+        shippingAddress: options.shippingAddress,
+        notificationEmail: 'ajani.fatai@yahoo.com' // Add the notification email
       }),
     });
     
@@ -63,6 +65,34 @@ export const redirectToStripePayment = async (options: StripePaymentOptions) => 
     return true;
   } catch (error) {
     console.error("Error redirecting to Stripe payment:", error);
+    return false;
+  }
+};
+
+/**
+ * Send order confirmation email with customer and product details
+ */
+export const sendOrderConfirmationEmail = async (orderData: any) => {
+  try {
+    const response = await fetch('https://api.your-server.com/send-order-confirmation', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to: 'ajani.fatai@yahoo.com',
+        subject: `New Order: Temperature Trekker - ${orderData.product.color}`,
+        orderData: orderData
+      }),
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to send order confirmation email');
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('Error sending order confirmation email:', error);
     return false;
   }
 };

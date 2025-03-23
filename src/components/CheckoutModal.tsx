@@ -18,6 +18,7 @@ import {
   CheckoutStep 
 } from "@/components/checkout/types";
 import { saveOrder } from "@/utils/orderStorage";
+import { sendOrderConfirmationEmail } from "@/utils/stripePayment";
 
 interface CheckoutModalProps {
   open: boolean;
@@ -62,6 +63,7 @@ const CheckoutModal = ({
       
       // Check if we have a pending order reference
       const pendingOrderRef = localStorage.getItem('pendingOrderReference');
+      const pendingOrderDataString = localStorage.getItem('pendingOrderData');
       
       if (pendingOrderRef) {
         setOrderReference(pendingOrderRef);
@@ -70,6 +72,21 @@ const CheckoutModal = ({
         // Update order status to completed
         // This would typically be done by a webhook in a real app
         // For this demo, we're simulating the completed payment
+        
+        // Send order confirmation email if we have order data
+        if (pendingOrderDataString) {
+          const orderData = JSON.parse(pendingOrderDataString);
+          orderData.status = 'Paid';
+          
+          // Update the order in localStorage
+          saveOrder(pendingOrderRef, orderData);
+          
+          // Send confirmation email
+          await sendOrderConfirmationEmail(orderData);
+          
+          // Remove the pending order data
+          localStorage.removeItem('pendingOrderData');
+        }
         
         toast({
           title: "Payment Successful!",

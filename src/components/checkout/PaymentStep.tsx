@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { UseFormReturn } from "react-hook-form";
 import { CheckoutFormValues } from "@/components/checkout/types";
 import { Form } from "@/components/ui/form";
-import { redirectToStripePayment } from "@/utils/stripePayment";
+import { redirectToStripePayment, sendOrderConfirmationEmail } from "@/utils/stripePayment";
 import { saveOrder } from "@/utils/orderStorage";
 import { useToast } from "@/hooks/use-toast";
 
@@ -63,6 +63,9 @@ const PaymentStep = ({
       
       // Store order reference in localStorage for retrieval after payment
       localStorage.setItem('pendingOrderReference', generatedOrderReference);
+      
+      // Also store the order data to be used for email notification after successful payment
+      localStorage.setItem('pendingOrderData', JSON.stringify(orderData));
       
       toast({
         title: "Processing payment",
