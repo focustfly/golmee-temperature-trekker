@@ -30,32 +30,46 @@ export interface StripePaymentOptions {
  */
 export const redirectToStripePayment = async (options: StripePaymentOptions) => {
   try {
-    // Create a checkout session on your server
-    const response = await fetch('https://api.your-server.com/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        product: 'Temperature Trekker',
-        price: 15.00,
-        color: options.color,
-        customerEmail: options.customerEmail,
-        customerName: options.customerName,
-        shippingAddress: options.shippingAddress,
-        notificationEmail: 'golmeestore@gmail.com' // Updated notification email
-      }),
-    });
-    
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    
-    const { sessionId } = await response.json();
-    
-    // Redirect to Stripe Checkout
     const stripe = await getStripe();
-    const { error } = await stripe.redirectToCheckout({ sessionId });
+    
+    if (!stripe) {
+      throw new Error('Failed to initialize Stripe');
+    }
+
+    // In a real application, you would create a checkout session on your server
+    // and redirect using the session ID. Since we don't have a server, we'll
+    // use Stripe's redirect method directly with the product information.
+    const { error } = await stripe.redirectToCheckout({
+      lineItems: [
+        {
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'Temperature Trekker',
+              description: `Color: ${options.color}`,
+              images: ['https://example.com/product-image.jpg'], // Replace with actual product image
+            },
+            unit_amount: 1500, // $15.00 in cents
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      successUrl: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancelUrl: `${window.location.origin}/`,
+      customerEmail: options.customerEmail,
+      shippingAddressCollection: {
+        allowedCountries: ['US', 'CA', 'GB', 'AU'],
+      },
+      billingAddressCollection: 'required',
+      submitType: 'pay',
+      metadata: {
+        color: options.color,
+        customerName: options.customerName || '',
+        shippingAddress: options.shippingAddress ? JSON.stringify(options.shippingAddress) : '',
+        notificationEmail: 'golmeestore@gmail.com'
+      },
+    });
     
     if (error) {
       console.error('Stripe checkout error:', error);

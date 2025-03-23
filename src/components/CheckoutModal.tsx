@@ -1,11 +1,12 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "react-router-dom";
 
 import ColorSelectionStep from "@/components/checkout/ColorSelectionStep";
 import ShippingStep from "@/components/checkout/ShippingStep";
@@ -39,6 +40,7 @@ const CheckoutModal = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderReference, setOrderReference] = useState<string>("");
   const { toast } = useToast();
+  const location = useLocation();
   
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
@@ -54,13 +56,20 @@ const CheckoutModal = ({
     },
   });
 
-  const onSubmit = async (data: CheckoutFormValues) => {
+  // Check if redirected from Stripe success page
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const sessionId = searchParams.get('session_id');
+    
+    if (sessionId && open) {
+      handlePaymentSuccess(sessionId);
+    }
+  }, [location, open]);
+
+  const handlePaymentSuccess = async (sessionId: string) => {
     setIsSubmitting(true);
     
     try {
-      // This will only be called for confirmation from Stripe success return
-      // Most of the payment logic is now in the PaymentStep component
-      
       // Check if we have a pending order reference
       const pendingOrderRef = localStorage.getItem('pendingOrderReference');
       const pendingOrderDataString = localStorage.getItem('pendingOrderData');
@@ -105,6 +114,12 @@ const CheckoutModal = ({
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const onSubmit = async (data: CheckoutFormValues) => {
+    // This will only be used if we're handling a direct form submission
+    // Most of the payment logic is now in the PaymentStep component
+    console.log("Form submission data:", data);
   };
 
   const getCurrentColorImage = () => {
