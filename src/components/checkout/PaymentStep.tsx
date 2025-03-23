@@ -30,8 +30,8 @@ const PaymentStep = ({
     const formValues = form.getValues();
     setIsProcessingPayment(true);
     
-    // Save order to local storage first with 'Pending' status
     try {
+      // Save order to local storage first with 'Pending' status
       const orderData = {
         customer: {
           fullName: formValues.fullName,

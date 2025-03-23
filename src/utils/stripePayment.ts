@@ -1,9 +1,9 @@
 
 import { loadStripe } from '@stripe/stripe-js';
 
-// Replace with your Stripe publishable key
+// This is a placeholder - we will ask the user for their actual API key
 // This is a publishable key, so it's safe to include in client-side code
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+const STRIPE_PUBLISHABLE_KEY = 'YOUR_STRIPE_PUBLISHABLE_KEY';
 
 // Initialize Stripe
 let stripePromise: Promise<any> | null = null;
@@ -31,41 +31,36 @@ export interface StripePaymentOptions {
  */
 export const redirectToStripePayment = async (options: StripePaymentOptions) => {
   try {
-    // In a real implementation, this would make a request to your backend
-    // which would create a Stripe Checkout Session and return the session ID
-    // Here we're simulating that with a mock session ID
-
-    // Normally, you would make an API call like this:
-    // const response = await fetch('/api/create-checkout-session', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     product: 'Temperature Trekker',
-    //     price: 15.00,
-    //     color: options.color,
-    //     customer: {
-    //       email: options.customerEmail,
-    //       name: options.customerName,
-    //       shipping: options.shippingAddress
-    //     }
-    //   })
-    // });
-    // const { sessionId } = await response.json();
+    // Create a checkout session on your server
+    const response = await fetch('https://api.your-server.com/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        product: 'Temperature Trekker',
+        price: 15.00,
+        color: options.color,
+        customerEmail: options.customerEmail,
+        customerName: options.customerName,
+        shippingAddress: options.shippingAddress
+      }),
+    });
     
-    // For this demo, since we don't have a backend, we'll use a mock session
-    // and redirect to the success URL directly
-    console.log('Preparing payment for options:', options);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
     
-    // In a real application with a backend, you would redirect to Stripe:
-    // const stripe = await getStripe();
-    // await stripe.redirectToCheckout({ sessionId });
+    const { sessionId } = await response.json();
     
-    // For this demo without a backend, we'll simulate a successful payment
-    // after a short delay
-    setTimeout(() => {
-      // Simulate a successful payment
-      window.location.href = `${window.location.origin}?payment_success=true`;
-    }, 1500);
+    // Redirect to Stripe Checkout
+    const stripe = await getStripe();
+    const { error } = await stripe.redirectToCheckout({ sessionId });
+    
+    if (error) {
+      console.error('Stripe checkout error:', error);
+      throw new Error(error.message);
+    }
     
     return true;
   } catch (error) {
