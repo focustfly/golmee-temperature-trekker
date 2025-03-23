@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { UseFormReturn } from "react-hook-form";
 import { CheckoutFormValues } from "@/components/checkout/types";
@@ -23,9 +24,11 @@ const PaymentStep = ({
   selectedColor 
 }: PaymentStepProps) => {
   const { toast } = useToast();
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   
-  const handlePaymentWithStripe = () => {
+  const handlePaymentWithStripe = async () => {
     const formValues = form.getValues();
+    setIsProcessingPayment(true);
     
     // Save order to local storage first with 'Pending' status
     try {
@@ -61,8 +64,13 @@ const PaymentStep = ({
       // Store order reference in localStorage for retrieval after payment
       localStorage.setItem('pendingOrderReference', generatedOrderReference);
       
+      toast({
+        title: "Processing payment",
+        description: "You're being redirected to our secure payment provider.",
+      });
+      
       // Redirect to Stripe payment
-      redirectToStripePayment({
+      const success = await redirectToStripePayment({
         color: selectedColor,
         customerEmail: formValues.email,
         customerName: formValues.fullName,
@@ -73,6 +81,10 @@ const PaymentStep = ({
           country: formValues.country,
         }
       });
+      
+      if (!success) {
+        throw new Error("Payment redirection failed");
+      }
     } catch (error) {
       console.error("Error preparing order:", error);
       toast({
@@ -80,6 +92,7 @@ const PaymentStep = ({
         description: "There was a problem preparing your order. Please try again.",
         variant: "destructive",
       });
+      setIsProcessingPayment(false);
     }
   };
 
@@ -127,16 +140,16 @@ const PaymentStep = ({
               type="button" 
               variant="outline" 
               onClick={onBack}
-              disabled={isSubmitting}
+              disabled={isProcessingPayment || isSubmitting}
             >
               Back to Shipping
             </Button>
             <Button 
               type="submit" 
               className="bg-golmee-blue hover:bg-blue-600 text-white"
-              disabled={isSubmitting}
+              disabled={isProcessingPayment || isSubmitting}
             >
-              {isSubmitting ? "Processing..." : "Continue to Payment"}
+              {isProcessingPayment ? "Processing..." : "Continue to Payment"}
             </Button>
           </div>
         </form>
