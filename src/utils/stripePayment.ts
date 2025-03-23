@@ -1,9 +1,7 @@
-
 import { loadStripe } from '@stripe/stripe-js';
 
-// This is a placeholder - we will ask the user for their actual API key
 // This is a publishable key, so it's safe to include in client-side code
-const STRIPE_PUBLISHABLE_KEY = 'YOUR_STRIPE_PUBLISHABLE_KEY';
+const STRIPE_PUBLISHABLE_KEY = 'pk_test_51QzAd4GSdAlnjfttQjU8LV2E5ks0Zon1GAXq67m5AhbtnxB3B5A0Xx0QBLBkjyMhicWWT3VPSXgJV7zsGug0RN9v00lXcVI74w';
 
 // Initialize Stripe
 let stripePromise: Promise<any> | null = null;
