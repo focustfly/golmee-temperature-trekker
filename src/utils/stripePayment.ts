@@ -43,7 +43,7 @@ export const redirectToStripePayment = async (options: StripePaymentOptions) => 
         customerEmail: options.customerEmail,
         customerName: options.customerName,
         shippingAddress: options.shippingAddress,
-        notificationEmail: 'ajani.fatai@yahoo.com' // Add the notification email
+        notificationEmail: 'golmeestore@gmail.com' // Updated notification email
       }),
     });
     
@@ -80,7 +80,7 @@ export const sendOrderConfirmationEmail = async (orderData: any) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        to: 'ajani.fatai@yahoo.com',
+        to: 'golmeestore@gmail.com',
         subject: `New Order: Temperature Trekker - ${orderData.product.color}`,
         orderData: orderData
       }),
