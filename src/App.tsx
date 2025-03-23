@@ -7,13 +7,21 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { WordPressProvider } from "./contexts/WordPressContext";
 import Index from "./pages/Index";
 import WordPressBlogPage from "./pages/WordPressBlogPage";
+import WordPressSetupPage from "./pages/WordPressSetupPage";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      staleTime: 10 * 1000,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <WordPressProvider apiUrl="https://your-wordpress-site.com/wp-json/wp/v2">
+    <WordPressProvider>
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -21,6 +29,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/blog" element={<WordPressBlogPage />} />
+            <Route path="/wordpress-setup" element={<WordPressSetupPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

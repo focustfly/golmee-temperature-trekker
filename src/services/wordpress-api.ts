@@ -4,8 +4,6 @@
  * This service handles API calls to a WordPress backend
  */
 
-const API_URL = "https://your-wordpress-site.com/wp-json/wp/v2";
-
 export interface WordPressPost {
   id: number;
   title: {
@@ -38,70 +36,118 @@ export interface WordPressPage {
   slug: string;
 }
 
+export interface WordPressAPIResponse<T> {
+  data: T;
+  totalPages?: number;
+  totalItems?: number;
+}
+
 export class WordPressAPI {
   baseUrl: string;
+  timeoutDuration: number;
 
-  constructor(baseUrl: string = API_URL) {
+  constructor(baseUrl: string, timeout: number = 10000) {
     this.baseUrl = baseUrl;
+    this.timeoutDuration = timeout;
+  }
+
+  private async fetchWithTimeout(url: string, options: RequestInit = {}): Promise<Response> {
+    const controller = new AbortController();
+    const { signal } = controller;
+    
+    const timeoutId = setTimeout(() => controller.abort(), this.timeoutDuration);
+    
+    try {
+      const response = await fetch(url, { ...options, signal });
+      clearTimeout(timeoutId);
+      return response;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        throw new Error(`Request timeout after ${this.timeoutDuration}ms`);
+      }
+      throw error;
+    }
   }
 
   async getPosts(page: number = 1, perPage: number = 10, withFeaturedMedia: boolean = true): Promise<WordPressPost[]> {
-    const embed = withFeaturedMedia ? "&_embed" : "";
-    const response = await fetch(
-      `${this.baseUrl}/posts?page=${page}&per_page=${perPage}${embed}`
-    );
-    
-    if (!response.ok) {
-      throw new Error(`Error fetching posts: ${response.statusText}`);
+    try {
+      const embed = withFeaturedMedia ? "&_embed" : "";
+      const response = await this.fetchWithTimeout(
+        `${this.baseUrl}/posts?page=${page}&per_page=${perPage}${embed}`
+      );
+      
+      if (!response.ok) {
+        throw new Error(`Error fetching posts: ${response.statusText} (${response.status})`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('WordPress API Error:', error);
+      throw error instanceof Error ? error : new Error('Unknown error fetching posts');
     }
-    
-    return await response.json();
   }
 
   async getPost(slug: string, withFeaturedMedia: boolean = true): Promise<WordPressPost> {
-    const embed = withFeaturedMedia ? "&_embed" : "";
-    const response = await fetch(
-      `${this.baseUrl}/posts?slug=${slug}${embed}`
-    );
-    
-    if (!response.ok) {
-      throw new Error(`Error fetching post: ${response.statusText}`);
+    try {
+      const embed = withFeaturedMedia ? "&_embed" : "";
+      const response = await this.fetchWithTimeout(
+        `${this.baseUrl}/posts?slug=${slug}${embed}`
+      );
+      
+      if (!response.ok) {
+        throw new Error(`Error fetching post: ${response.statusText} (${response.status})`);
+      }
+      
+      const posts = await response.json();
+      if (!posts.length) {
+        throw new Error(`Post not found: ${slug}`);
+      }
+      
+      return posts[0];
+    } catch (error) {
+      console.error('WordPress API Error:', error);
+      throw error instanceof Error ? error : new Error(`Failed to fetch post: ${slug}`);
     }
-    
-    const posts = await response.json();
-    if (!posts.length) {
-      throw new Error(`Post not found: ${slug}`);
-    }
-    
-    return posts[0];
   }
 
   async getPage(slug: string): Promise<WordPressPage> {
-    const response = await fetch(
-      `${this.baseUrl}/pages?slug=${slug}`
-    );
-    
-    if (!response.ok) {
-      throw new Error(`Error fetching page: ${response.statusText}`);
+    try {
+      const response = await this.fetchWithTimeout(
+        `${this.baseUrl}/pages?slug=${slug}`
+      );
+      
+      if (!response.ok) {
+        throw new Error(`Error fetching page: ${response.statusText} (${response.status})`);
+      }
+      
+      const pages = await response.json();
+      if (!pages.length) {
+        throw new Error(`Page not found: ${slug}`);
+      }
+      
+      return pages[0];
+    } catch (error) {
+      console.error('WordPress API Error:', error);
+      throw error instanceof Error ? error : new Error(`Failed to fetch page: ${slug}`);
     }
-    
-    const pages = await response.json();
-    if (!pages.length) {
-      throw new Error(`Page not found: ${slug}`);
-    }
-    
-    return pages[0];
   }
 
   async getMedia(id: number): Promise<any> {
-    const response = await fetch(`${this.baseUrl}/media/${id}`);
-    
-    if (!response.ok) {
-      throw new Error(`Error fetching media: ${response.statusText}`);
+    try {
+      const response = await this.fetchWithTimeout(`${this.baseUrl}/media/${id}`);
+      
+      if (!response.ok) {
+        throw new Error(`Error fetching media: ${response.statusText} (${response.status})`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('WordPress API Error:', error);
+      throw error instanceof Error ? error : new Error(`Failed to fetch media: ${id}`);
     }
-    
-    return await response.json();
   }
 }
 
-export const wordPressApi = new WordPressAPI();
+// Create a singleton instance with default settings
+export const wordPressApi = new WordPressAPI('https://demo.wp-api.org/wp-json/wp/v2');
