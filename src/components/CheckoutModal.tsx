@@ -34,6 +34,8 @@ const CheckoutModal = ({
   onColorSelect,
 }: CheckoutModalProps) => {
   const [step, setStep] = useState<CheckoutStep>("color");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [orderReference, setOrderReference] = useState<string>("");
   const { toast } = useToast();
   
   const form = useForm<CheckoutFormValues>({
@@ -52,17 +54,66 @@ const CheckoutModal = ({
     },
   });
 
-  const onSubmit = (data: CheckoutFormValues) => {
-    // In a real application, you would process the payment with a payment provider
-    console.log("Payment submitted:", data);
+  const onSubmit = async (data: CheckoutFormValues) => {
+    setIsSubmitting(true);
     
-    // Show success and move to confirmation
-    toast({
-      title: "Order Placed Successfully!",
-      description: "Thank you for your purchase. You will receive a confirmation email shortly.",
-    });
-    
-    setStep("confirmation");
+    try {
+      // Create order object with shipping and product info
+      const orderData = {
+        customer: {
+          fullName: data.fullName,
+          email: data.email,
+          phoneNumber: data.phoneNumber,
+          shippingAddress: {
+            address: data.address,
+            city: data.city,
+            postalCode: data.postalCode,
+            country: data.country,
+          }
+        },
+        product: {
+          name: "Temperature Trekker",
+          color: selectedColor,
+          price: 49.99,
+          currency: "USD"
+        },
+        orderDate: new Date().toISOString(),
+        paymentMethod: "Credit Card", // In a real app, you'd use a payment processor
+        // Note: We're not sending the actual card details for security reasons
+      };
+
+      // Send order data to backend
+      const response = await fetch('https://your-wordpress-site.com/wp-json/custom/v1/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create order');
+      }
+
+      const result = await response.json();
+      setOrderReference(result.orderReference || 'ORD-' + Math.random().toString(36).substr(2, 9));
+      
+      toast({
+        title: "Order Placed Successfully!",
+        description: "Thank you for your purchase. You will receive a confirmation email shortly.",
+      });
+      
+      setStep("confirmation");
+    } catch (error) {
+      console.error("Order submission error:", error);
+      toast({
+        title: "Order Submission Failed",
+        description: "There was a problem processing your order. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const getCurrentColorImage = () => {
@@ -73,6 +124,7 @@ const CheckoutModal = ({
   const resetAndClose = () => {
     setStep("color");
     form.reset();
+    setOrderReference("");
     onOpenChange(false);
   };
 
@@ -119,6 +171,7 @@ const CheckoutModal = ({
             form={form}
             onBack={() => setStep("shipping")}
             onSubmit={onSubmit}
+            isSubmitting={isSubmitting}
           />
         )}
 
@@ -126,6 +179,7 @@ const CheckoutModal = ({
           <ConfirmationStep 
             selectedColor={selectedColor}
             onClose={resetAndClose}
+            orderReference={orderReference}
           />
         )}
       </DialogContent>

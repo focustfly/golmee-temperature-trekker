@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 interface ConfirmationStepProps {
   selectedColor: string;
   onClose: () => void;
+  orderReference?: string;
 }
 
-const ConfirmationStep = ({ selectedColor, onClose }: ConfirmationStepProps) => {
+const ConfirmationStep = ({ selectedColor, onClose, orderReference }: ConfirmationStepProps) => {
   return (
     <div className="space-y-6 text-center">
       <div className="py-8">
@@ -33,6 +34,11 @@ const ConfirmationStep = ({ selectedColor, onClose }: ConfirmationStepProps) => 
           Thank you for your order. Your Temperature Trekker in {selectedColor} will
           be shipped soon.
         </p>
+        {orderReference && (
+          <p className="mt-4 text-sm font-medium text-gray-700 bg-gray-100 p-2 rounded">
+            Order Reference: <span className="font-bold">{orderReference}</span>
+          </p>
+        )}
       </div>
       <Button
         className="bg-golmee-blue hover:bg-blue-600 text-white"

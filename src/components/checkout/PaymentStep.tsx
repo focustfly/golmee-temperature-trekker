@@ -10,9 +10,10 @@ interface PaymentStepProps {
   form: UseFormReturn<CheckoutFormValues>;
   onBack: () => void;
   onSubmit: (data: CheckoutFormValues) => void;
+  isSubmitting?: boolean;
 }
 
-const PaymentStep = ({ form, onBack, onSubmit }: PaymentStepProps) => {
+const PaymentStep = ({ form, onBack, onSubmit, isSubmitting = false }: PaymentStepProps) => {
   return (
     <div className="space-y-6">
       <Form {...form}>
@@ -23,6 +24,7 @@ const PaymentStep = ({ form, onBack, onSubmit }: PaymentStepProps) => {
               id="cardNumber"
               {...form.register("cardNumber")}
               placeholder="1234 5678 9012 3456"
+              disabled={isSubmitting}
             />
             {form.formState.errors.cardNumber && (
               <p className="text-sm text-red-500">
@@ -38,6 +40,7 @@ const PaymentStep = ({ form, onBack, onSubmit }: PaymentStepProps) => {
                 id="expiryDate"
                 {...form.register("expiryDate")}
                 placeholder="MM/YY"
+                disabled={isSubmitting}
               />
               {form.formState.errors.expiryDate && (
                 <p className="text-sm text-red-500">
@@ -48,7 +51,12 @@ const PaymentStep = ({ form, onBack, onSubmit }: PaymentStepProps) => {
 
             <div>
               <Label htmlFor="cvv">CVV</Label>
-              <Input id="cvv" {...form.register("cvv")} placeholder="123" />
+              <Input 
+                id="cvv" 
+                {...form.register("cvv")} 
+                placeholder="123" 
+                disabled={isSubmitting}
+              />
               {form.formState.errors.cvv && (
                 <p className="text-sm text-red-500">
                   {form.formState.errors.cvv.message}
@@ -58,11 +66,20 @@ const PaymentStep = ({ form, onBack, onSubmit }: PaymentStepProps) => {
           </div>
 
           <div className="pt-4 flex justify-between">
-            <Button type="button" variant="outline" onClick={onBack}>
+            <Button 
+              type="button" 
+              variant="outline" 
+              onClick={onBack}
+              disabled={isSubmitting}
+            >
               Back to Shipping
             </Button>
-            <Button type="submit" className="bg-golmee-blue hover:bg-blue-600 text-white">
-              Complete Purchase
+            <Button 
+              type="submit" 
+              className="bg-golmee-blue hover:bg-blue-600 text-white"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Processing..." : "Complete Purchase"}
             </Button>
           </div>
         </form>
