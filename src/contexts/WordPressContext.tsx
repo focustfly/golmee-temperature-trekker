@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { WordPressAPI } from '../services/wordpress-api';
 import { toast } from '@/components/ui/use-toast';
